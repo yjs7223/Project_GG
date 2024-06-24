@@ -11,5 +11,6 @@ public class Project_GGEditorTarget : TargetRules
 		DefaultBuildSettings = BuildSettingsVersion.V4;
 		IncludeOrderVersion = EngineIncludeOrderVersion.Unreal5_3;
 		ExtraModuleNames.Add("Project_GG");
+		ExtraModuleNames.Add("EnemyModule");
 	}
 }
