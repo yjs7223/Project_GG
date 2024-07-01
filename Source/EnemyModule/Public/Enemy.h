@@ -15,10 +15,10 @@ public:
 	// Sets default values for this character's properties
 	AEnemy();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySetting")
-		bool leader;
+	class UEnemyGroupSystemComponent* groupSystem;
 
-	class UEnemyGroupSystemComponent* egsc;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySetting")
+		bool bEnable;
 
 	// AI Stat
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "EnemySetting")
@@ -29,6 +29,8 @@ public:
 	float slow;	// 속도 감소량
 
 	class AEnemyController* controller;
+
+	class AEnemySpawner* mySpawner;
 
 protected:
 	// Called when the game starts or when spawned
@@ -43,4 +45,5 @@ public:
 
 	void HpUpdate();
 	void MovementUpdate();
+	void Init();
 };

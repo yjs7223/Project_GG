@@ -16,9 +16,21 @@ public:
 	// Sets default values for this component's properties
 	UEnemyGroupSystemComponent();
 
-	class AEnemy* owner;
+	float timer;
 
-	class TArray<AEnemy*> group;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		bool bLeader;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AEnemy* owner;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		class AEnemy* leaderEnemy;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		TArray<AEnemy*> group;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector destination;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		FVector settingPos;
 
 protected:
 	// Called when the game starts
@@ -28,5 +40,7 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-		
+	void FindLeader();
+
+	void SetPosition();
 };

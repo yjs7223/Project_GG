@@ -7,6 +7,7 @@
 #include "BehaviorTree/BlackboardData.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "EnemyGroupSystemComponent.h"
+#include "EnemySpawner.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -14,6 +15,7 @@ AEnemy::AEnemy()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
+	//egsc = CreateDefaultSubobject<UEnemyGroupSystemComponent>(TEXT("GroupSystem"));
 }
 
 // Called when the game starts or when spawned
@@ -22,7 +24,7 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 
 	controller = Cast<AEnemyController>(GetController());
-	egsc = FindComponentByClass<UEnemyGroupSystemComponent>();
+	groupSystem = FindComponentByClass<UEnemyGroupSystemComponent>();
 }
 
 // Called every frame
@@ -53,4 +55,10 @@ void AEnemy::MovementUpdate()
 
 	// Ç¥½Ã¿ë
 	curSpeed = GetCharacterMovement()->MaxWalkSpeed;
+}
+
+void AEnemy::Init()
+{
+	bEnable = true;
+	controller->RunBT();
 }

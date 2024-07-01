@@ -11,11 +11,24 @@ void AEnemyController::BeginPlay()
 
 	bbc = Blackboard;
 	UseBlackboard(bbd, bbc);
-
+	
 }
 
 void AEnemyController::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
+}
+
+void AEnemyController::RunBT()
+{
+	RunBehaviorTree(bt);
+}
+
+void AEnemyController::SetDestination(FVector p_vec)
+{
+	if (bbc)
+	{
+		bbc->SetValueAsVector("Destination", p_vec);
+	}
 }

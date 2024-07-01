@@ -3,6 +3,7 @@
 
 #include "EnemyGroupSystemComponent.h"
 #include "Enemy.h"
+#include "EnemyController.h"
 
 // Sets default values for this component's properties
 UEnemyGroupSystemComponent::UEnemyGroupSystemComponent()
@@ -11,6 +12,7 @@ UEnemyGroupSystemComponent::UEnemyGroupSystemComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
+	bLeader = false;
 	// ...
 }
 
@@ -20,6 +22,7 @@ void UEnemyGroupSystemComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	owner = GetOwner<AEnemy>();
 	// ...
 	
 }
@@ -30,6 +33,36 @@ void UEnemyGroupSystemComponent::TickComponent(float DeltaTime, ELevelTick TickT
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	timer += DeltaTime;
+	if (timer >= 1 && leaderEnemy == nullptr)
+	{
+		FindLeader();
+	}
+
+	if (leaderEnemy)
+	{
+		SetPosition();
+	}
 	// ...
+}
+
+void UEnemyGroupSystemComponent::FindLeader()
+{
+	if (!bLeader)
+	{
+		for (auto& e : group)
+		{
+			if (e->groupSystem->bLeader)
+			{
+				leaderEnemy = e;
+			}
+		}
+	}
+}
+
+void UEnemyGroupSystemComponent::SetPosition()
+{
+	destination = leaderEnemy->GetActorLocation() + settingPos;
+	owner->controller->SetDestination(destination);
 }
 
